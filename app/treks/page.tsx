@@ -5,7 +5,7 @@ import { TreksGrid } from '@/components/trek/TreksGrid'
 import { db } from '@/lib/db'
 import type { TrekVerdictData } from '@/types'
 
-const BASE = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://peakweather.vercel.app'
+const BASE = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://peakweather.peakweather.workers.dev'
 
 export const metadata: Metadata = {
   title: 'Browse Treks & Trails Worldwide',

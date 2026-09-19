@@ -10,7 +10,7 @@ import { db } from '@/lib/db'
 import { UNIQUE_POPULAR_CITIES } from '@/lib/popular-cities'
 import type { TrekVerdictData } from '@/types'
 
-const BASE = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://peakweather.vercel.app'
+const BASE = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://peakweather.peakweather.workers.dev'
 
 export const metadata: Metadata = {
   title: 'PeakWeather — Global Weather & AI Trek Forecasts',
