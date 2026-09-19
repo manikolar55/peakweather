@@ -26,6 +26,9 @@ export const metadata: Metadata = {
     images: ['/opengraph-image'],
   },
   robots: { index: true, follow: true },
+  verification: {
+    google: 'lgY7UsyA-0ES08xDt3kFpKT8wW5njRkdW934PdTJLwU',
+  },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
