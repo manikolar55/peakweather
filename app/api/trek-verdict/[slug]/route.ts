@@ -61,8 +61,8 @@ export async function GET(
       summitWeather,
     )
 
-    // Upsert verdict in DB
-    await db.trekVerdict.upsert({
+    // Cache verdict in DB — non-fatal if storage is full
+    db.trekVerdict.upsert({
       where: { trekId: trek.id },
       update: {
         verdict: JSON.stringify(verdictData),
@@ -73,7 +73,7 @@ export async function GET(
         verdict: JSON.stringify(verdictData),
         expiresAt: new Date(Date.now() + VERDICT_TTL_MS),
       },
-    })
+    }).catch((e) => console.warn('Verdict cache write failed:', e))
 
     return NextResponse.json({ cached: false, verdict: verdictData })
   } catch (err) {
