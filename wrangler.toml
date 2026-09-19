@@ -1,0 +1,32 @@
+name            = "peakweather"
+compatibility_date  = "2024-12-18"
+compatibility_flags = ["nodejs_compat"]
+main            = ".open-next/worker.js"
+
+[assets]
+directory = ".open-next/assets"
+binding   = "ASSETS"
+
+# ── Environment variables ────────────────────────────────────────────────────
+# Secrets (DATABASE_URL, ANTHROPIC_API_KEY, etc.) must be set via:
+#   wrangler secret put DATABASE_URL
+#   wrangler secret put METNO_USER_AGENT
+#   wrangler secret put ANTHROPIC_API_KEY
+#   wrangler secret put OPENWEATHER_API_KEY
+# Public vars can go here:
+[vars]
+NEXT_PUBLIC_SITE_URL = "https://peakweather.yourdomain.com"
+
+# ── KV namespace — weather cache ─────────────────────────────────────────────
+# Create with: wrangler kv namespace create WEATHER_CACHE
+# Then replace the id below with the one wrangler prints.
+[[kv_namespaces]]
+binding = "WEATHER_CACHE"
+id      = "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
+
+# ── Local dev (wrangler dev) preview KV ─────────────────────────────────────
+# Create with: wrangler kv namespace create WEATHER_CACHE --preview
+# Then replace the preview_id below.
+# (When using `next dev` instead of `wrangler dev`, KV falls back to DB cache.)
+[env.preview.vars]
+NEXT_PUBLIC_SITE_URL = "http://localhost:8787"

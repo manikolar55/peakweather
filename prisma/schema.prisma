@@ -1,0 +1,80 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Trek {
+  id                 String   @id @default(cuid())
+  slug               String   @unique
+  name               String
+  country            String
+  region             String
+  lat                Float
+  lon                Float
+  trailheadElevation Int
+  summitElevation    Int
+  difficulty         String
+  durationDays       Int
+  description        String
+  popular            Boolean  @default(false)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  verdict            TrekVerdict?
+
+  @@index([country])
+  @@index([popular])
+  @@index([slug])
+}
+
+model TrekVerdict {
+  id        String   @id @default(cuid())
+  trekId    String   @unique
+  trek      Trek     @relation(fields: [trekId], references: [id], onDelete: Cascade)
+  verdict   String
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+
+  @@index([trekId])
+  @@index([expiresAt])
+}
+
+// Weather response cache — 30-min TTL per (lat,lon,alt) key
+model WeatherCache {
+  key          String   @id          // "metno:{lat4d}:{lon4d}:{alt|auto}"
+  data         String                // JSON-serialised WeatherData
+  fetchedAt    DateTime @default(now())
+  expiresAt    DateTime
+  lastModified String?               // Last-Modified header value for If-Modified-Since
+
+  @@index([expiresAt])
+}
+
+// GeoNames city data (cities with population >15 000)
+model City {
+  id          Int     @id           // GeoNames geonameid
+  name        String
+  asciiName   String
+  country     String                // ISO 3166-1 alpha-2 code e.g. "PK"
+  countryName String
+  lat         Float
+  lon         Float
+  population  Int
+  timezone    String                // IANA timezone e.g. "Asia/Karachi"
+  admin1      String?               // State / province name
+  slug        String  @unique       // e.g. "karachi-pk"
+
+  @@index([asciiName])
+  @@index([country])
+  @@index([slug])
+}
+
+// Daily call counter for OpenWeatherMap One Call 3.0 (950/day hard cap)
+model OWMDailyCounter {
+  date  String @id   // "YYYY-MM-DD" UTC
+  count Int    @default(0)
+}

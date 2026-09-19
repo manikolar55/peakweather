@@ -1,0 +1,12 @@
+{
+  "name": "PeakWeather",
+  "short_name": "PeakWeather",
+  "description": "Global weather forecasts and AI trek safety verdicts",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#2563eb",
+  "background_color": "#ffffff",
+  "icons": [
+    { "src": "/favicon.ico", "sizes": "any", "type": "image/x-icon" }
+  ]
+}
