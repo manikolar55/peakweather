@@ -22,7 +22,7 @@ NEXT_PUBLIC_SITE_URL = "https://peakweather.yourdomain.com"
 # Then replace the id below with the one wrangler prints.
 [[kv_namespaces]]
 binding = "WEATHER_CACHE"
-id      = "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
+id      = "19f1ed91fb4e44ddbc48c227d6596791"
 
 # ── Local dev (wrangler dev) preview KV ─────────────────────────────────────
 # Create with: wrangler kv namespace create WEATHER_CACHE --preview
