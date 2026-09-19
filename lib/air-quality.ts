@@ -1,37 +1,64 @@
+/**
+ * Air quality via Open-Meteo Air Quality API (Copernicus CAMS data).
+ * Free, no API key, pre-calculates US AQI and European AQI correctly.
+ * https://open-meteo.com/en/docs/air-quality-api
+ */
 import type { AirQualityData } from '@/types'
-import { fetchOWMAirPollution } from '@/lib/openweather'
 
-// EPA PM2.5 breakpoints → US AQI
-function pm25ToUsAqi(pm: number): number {
-  const bp = [
-    [0,     12.0,  0,   50],
-    [12.1,  35.4,  51,  100],
-    [35.5,  55.4,  101, 150],
-    [55.5,  150.4, 151, 200],
-    [150.5, 250.4, 201, 300],
-    [250.5, 500.4, 301, 500],
-  ] as const
-  for (const [cLo, cHi, iLo, iHi] of bp) {
-    if (pm >= cLo && pm <= cHi) {
-      return Math.round(((iHi - iLo) / (cHi - cLo)) * (pm - cLo) + iLo)
-    }
-  }
-  return pm > 500 ? 500 : 0
-}
+const BASE = 'https://air-quality-api.open-meteo.com/v1/air-quality'
+const TIMEOUT_MS = 8_000
 
 export async function fetchAirQuality(lat: number, lon: number): Promise<AirQualityData | null> {
-  const owm = await fetchOWMAirPollution(lat, lon)
-  if (!owm) return null
+  const params = new URLSearchParams({
+    latitude: String(lat),
+    longitude: String(lon),
+    current: 'us_aqi,european_aqi,pm2_5,pm10,ozone,nitrogen_dioxide,carbon_monoxide',
+    domains: 'cams_global',
+  })
 
-  const now = new Date().toISOString()
-  return {
-    hourly: {
-      time: [now],
-      pm2_5: [owm.pm2_5],
-      pm10: [owm.pm10],
-      ozone: [owm.o3],
-      european_aqi: [owm.aqi * 20], // OWM 1–5 → 20–100
-      us_aqi: [pm25ToUsAqi(owm.pm2_5)],
-    },
+  const ctrl = new AbortController()
+  const tid = setTimeout(() => ctrl.abort(), TIMEOUT_MS)
+
+  try {
+    const res = await fetch(`${BASE}?${params}`, {
+      signal: ctrl.signal,
+      cache: 'no-store',
+      headers: { Accept: 'application/json' },
+    })
+    clearTimeout(tid)
+    if (!res.ok) return null
+
+    type OMResponse = {
+      current?: {
+        time: string
+        us_aqi: number
+        european_aqi: number
+        pm2_5: number
+        pm10: number
+        ozone: number
+        nitrogen_dioxide: number
+        carbon_monoxide: number
+      }
+    }
+
+    const data = await res.json() as OMResponse
+    const c = data.current
+    if (!c) return null
+
+    return {
+      hourly: {
+        time: [c.time],
+        us_aqi: [c.us_aqi ?? 0],
+        european_aqi: [c.european_aqi ?? 0],
+        pm2_5: [c.pm2_5 ?? 0],
+        pm10: [c.pm10 ?? 0],
+        ozone: [c.ozone ?? 0],
+        nitrogen_dioxide: [c.nitrogen_dioxide ?? 0],
+        carbon_monoxide: [c.carbon_monoxide ?? 0],
+      },
+    }
+  } catch {
+    clearTimeout(tid)
+    return null
   }
 }

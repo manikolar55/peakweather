@@ -81,11 +81,13 @@ export interface WeatherData {
 export interface AirQualityData {
   hourly: {
     time: string[]
+    us_aqi: number[]
+    european_aqi: number[]
     pm2_5: number[]
     pm10: number[]
     ozone: number[]
-    european_aqi: number[]
-    us_aqi: number[]
+    nitrogen_dioxide?: number[]
+    carbon_monoxide?: number[]
   }
 }
 
