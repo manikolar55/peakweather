@@ -47,8 +47,8 @@ export default async function CityPage({ params }: Props) {
 
   const [weather, aq, nearbyTreks] = await Promise.all([
     fetchWeather(geo.latitude, geo.longitude, undefined, geo.timezone),
-    fetchAirQuality(geo.latitude, geo.longitude),
-    findTreksNearCity(geo.latitude, geo.longitude),
+    fetchAirQuality(geo.latitude, geo.longitude).catch(() => null),
+    findTreksNearCity(geo.latitude, geo.longitude).catch(() => []),
   ])
 
   const todayIndex = 0

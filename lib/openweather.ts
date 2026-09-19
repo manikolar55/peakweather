@@ -33,7 +33,7 @@ export interface OWMAirData {
 }
 
 export async function fetchOWMAirPollution(lat: number, lon: number): Promise<OWMAirData | null> {
-  if (!(await canCall())) return null
+  try { if (!(await canCall())) return null } catch { return null }
 
   const ctrl = new AbortController()
   const tid = setTimeout(() => ctrl.abort(), TIMEOUT_MS)
