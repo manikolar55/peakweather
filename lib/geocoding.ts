@@ -1,6 +1,6 @@
 import type { GeocodingResult, SearchResult, Trek } from '@/types'
 import { db } from '@/lib/db'
-import type { City } from '@prisma/client'
+import type { City } from '@/lib/db'
 
 export function buildCitySlug(name: string, countryCode: string): string {
   const base = name
