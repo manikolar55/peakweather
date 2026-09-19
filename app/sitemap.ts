@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next'
 import { db } from '@/lib/db'
 
-const BASE = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://peakweather.peakweather.workers.dev'
+const BASE = process.env.SITE_URL ?? 'https://peakweather.peakweather.workers.dev'
 
 // Static pages + treks only. City pages are in /sitemaps/[id] (route handlers).
 // Submit /sitemap-index.xml to Google Search Console for full coverage.

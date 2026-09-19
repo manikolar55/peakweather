@@ -16,6 +16,7 @@ binding   = "ASSETS"
 # Public vars can go here:
 [vars]
 NEXT_PUBLIC_SITE_URL = "https://peakweather.peakweather.workers.dev"
+SITE_URL = "https://peakweather.peakweather.workers.dev"
 
 # ── KV namespace — weather cache ─────────────────────────────────────────────
 # Create with: wrangler kv namespace create WEATHER_CACHE
