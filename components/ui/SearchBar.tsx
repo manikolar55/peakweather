@@ -89,7 +89,7 @@ export function SearchBar({ placeholder = 'Search city or trek...', className = 
       {open && results.length > 0 && (
         <ul
           ref={listRef}
-          className="absolute z-50 mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-xl overflow-hidden text-sm"
+          className="absolute z-50 mt-1 w-full rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-xl overflow-hidden text-sm max-h-72 overflow-y-auto"
           role="listbox"
         >
           {results.map((r, i) => (
@@ -98,18 +98,18 @@ export function SearchBar({ placeholder = 'Search city or trek...', className = 
               role="option"
               aria-selected={selected === i}
               onMouseDown={() => navigate(r)}
-              className={`flex items-center gap-3 px-4 py-2.5 cursor-pointer transition-colors ${
+              className={`flex items-center gap-2 px-3 py-2.5 cursor-pointer transition-colors ${
                 selected === i ? 'bg-blue-50 dark:bg-blue-900' : 'hover:bg-gray-50 dark:hover:bg-gray-700'
               }`}
             >
-              <span className="text-base">{r.type === 'trek' ? '🥾' : '🏙️'}</span>
-              <div className="min-w-0">
-                <p className="font-medium text-gray-900 dark:text-gray-100 truncate">{r.name}</p>
-                <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
-                  {r.type === 'trek' ? `Trek · ${r.country}` : `City · ${r.region ? `${r.region}, ` : ''}${r.country}`}
+              <span className="text-base shrink-0">{r.type === 'trek' ? '🥾' : '🏙️'}</span>
+              <div className="min-w-0 flex-1">
+                <p className="font-medium text-gray-900 dark:text-gray-100 truncate leading-tight">{r.name}</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400 truncate leading-tight mt-0.5">
+                  {r.type === 'trek' ? `Trek · ${r.country}` : `${r.region ? `${r.region}, ` : ''}${r.country}`}
                 </p>
               </div>
-              <span className={`ml-auto shrink-0 text-xs px-2 py-0.5 rounded-full ${
+              <span className={`shrink-0 text-xs px-2 py-0.5 rounded-full font-medium ${
                 r.type === 'trek'
                   ? 'bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300'
                   : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400'
