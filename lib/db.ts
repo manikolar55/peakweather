@@ -1,6 +1,6 @@
 import { neon } from '@neondatabase/serverless'
 import { PrismaNeonHTTP } from '@prisma/adapter-neon'
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '@prisma/client/edge'
 
 // Lazy singleton — deferred so build-time imports with no DATABASE_URL don't throw.
 let _client: PrismaClient | undefined
