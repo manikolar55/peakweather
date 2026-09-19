@@ -45,17 +45,7 @@ export async function search(query: string): Promise<SearchResult[]> {
       },
       take: 5,
     }),
-    db.city.findMany({
-      where: {
-        OR: [
-          { asciiName: { contains: q, mode: 'insensitive' } },
-          { name: { contains: q, mode: 'insensitive' } },
-          { countryName: { contains: q, mode: 'insensitive' } },
-        ],
-      },
-      orderBy: { population: 'desc' },
-      take: 5,
-    }),
+    db.city.searchByName(q, 5),
   ])
 
   const trekResults: SearchResult[] = treks.map((t) => ({

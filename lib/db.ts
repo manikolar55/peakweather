@@ -294,6 +294,28 @@ const cityNamespace = {
     const rows = await sql`SELECT COUNT(*)::int AS count FROM "City"`
     return Number(rows[0].count)
   },
+
+  // Relevance-ranked city search: exact > prefix > substring, then population.
+  async searchByName(q: string, limit = 5): Promise<City[]> {
+    const sql = getSql()
+    const escaped = escapeLike(q)
+    const rows = await sql.query(
+      `SELECT id, name, "asciiName", country, "countryName", lat, lon,
+              population, timezone, admin1, slug
+       FROM   "City"
+       WHERE  "asciiName" ILIKE $1 OR name ILIKE $1 OR "countryName" ILIKE $1
+       ORDER BY
+         CASE
+           WHEN "asciiName" ILIKE $2 OR name ILIKE $2 THEN 0
+           WHEN "asciiName" ILIKE $3 OR name ILIKE $3 THEN 1
+           ELSE 2
+         END,
+         population DESC
+       LIMIT $4`,
+      [`%${escaped}%`, escaped, `${escaped}%`, limit],
+    )
+    return rows.map(mapCity)
+  },
 }
 
 // ---------------------------------------------------------------------------
