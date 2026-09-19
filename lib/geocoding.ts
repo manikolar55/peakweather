@@ -38,9 +38,9 @@ export async function search(query: string): Promise<SearchResult[]> {
     db.trek.findMany({
       where: {
         OR: [
-          { name: { contains: q } },
-          { country: { contains: q } },
-          { region: { contains: q } },
+          { name: { contains: q, mode: 'insensitive' } },
+          { country: { contains: q, mode: 'insensitive' } },
+          { region: { contains: q, mode: 'insensitive' } },
         ],
       },
       take: 5,
@@ -48,9 +48,9 @@ export async function search(query: string): Promise<SearchResult[]> {
     db.city.findMany({
       where: {
         OR: [
-          { asciiName: { contains: q } },
-          { name: { contains: q } },
-          { countryName: { contains: q } },
+          { asciiName: { contains: q, mode: 'insensitive' } },
+          { name: { contains: q, mode: 'insensitive' } },
+          { countryName: { contains: q, mode: 'insensitive' } },
         ],
       },
       orderBy: { population: 'desc' },
