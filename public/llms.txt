@@ -16,11 +16,16 @@
 - City data: GeoNames cities15000 dataset (CC BY 4.0)
 
 ## Key pages
-- / — Homepage with local weather widget and popular city/trek overview
-- /treks — Browse 90+ treks with live AI safety verdicts
-- /trek/{slug} — Individual trek page: summit weather, AI verdict, 14-day forecast
-- /weather/{slug} — City weather page: current, hourly, daily, AQI, UV, radar
-- /radar — Full-screen global animated radar
+- https://peakweather.peakweather.workers.dev/ — Homepage with local weather widget and popular city/trek overview
+- https://peakweather.peakweather.workers.dev/treks — Browse 90+ treks with live AI safety verdicts
+- https://peakweather.peakweather.workers.dev/trek/everest-base-camp-np — Example trek: Everest Base Camp
+- https://peakweather.peakweather.workers.dev/trek/mont-blanc-fr — Example trek: Mont Blanc
+- https://peakweather.peakweather.workers.dev/trek/kilimanjaro-tz — Example trek: Kilimanjaro
+- https://peakweather.peakweather.workers.dev/weather/london-gb — Example city: London weather
+- https://peakweather.peakweather.workers.dev/weather/tokyo-jp — Example city: Tokyo weather
+- https://peakweather.peakweather.workers.dev/weather/new-york-us — Example city: New York weather
+- https://peakweather.peakweather.workers.dev/radar — Full-screen global animated radar
+- https://peakweather.peakweather.workers.dev/about — About PeakWeather and data sources
 
 ## AI verdict format
 Each verdict classifies current summit conditions as one of three states:

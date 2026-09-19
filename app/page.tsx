@@ -29,8 +29,8 @@ const homepageJsonLd = {
       description: 'Global weather forecasts and AI-powered trek safety verdicts.',
       potentialAction: {
         '@type': 'SearchAction',
-        target: { '@type': 'EntryPoint', urlTemplate: `${BASE}/weather/{slug}` },
-        'query-input': 'required name=slug',
+        target: { '@type': 'EntryPoint', urlTemplate: `${BASE}/weather/{search_term_string}` },
+        'query-input': 'required name=search_term_string',
       },
     },
     {
@@ -38,6 +38,12 @@ const homepageJsonLd = {
       '@id': `${BASE}/#organization`,
       name: 'PeakWeather',
       url: BASE,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${BASE}/opengraph-image`,
+        width: 1200,
+        height: 630,
+      },
     },
   ],
 }

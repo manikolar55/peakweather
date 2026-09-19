@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: 'About PeakWeather',
   description: 'Learn about PeakWeather — global weather forecasts, AI-powered trek safety verdicts, and the data sources powering the platform.',
   alternates: { canonical: '/about' },
-  robots: { index: false, follow: false },
+  robots: { index: true, follow: true },
 }
 
 export default function AboutPage() {

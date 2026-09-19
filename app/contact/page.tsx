@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: 'Contact Us',
   description: 'Have a question about PeakWeather, our AI trek verdicts, or weather data? Reach out to hello@peakweather.app — we typically respond within 2 business days.',
   alternates: { canonical: '/contact' },
-  robots: { index: false, follow: false },
+  robots: { index: false, follow: true },
 }
 
 export default function ContactPage() {

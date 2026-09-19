@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: 'Terms of Service',
   description: 'PeakWeather terms of service — conditions for using the platform.',
   alternates: { canonical: '/terms' },
-  robots: { index: false, follow: false },
+  robots: { index: false, follow: true },
 }
 
 const UPDATED = '18 September 2026'

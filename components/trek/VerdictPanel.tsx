@@ -5,6 +5,7 @@ import type { TrekVerdictData, TrekStatus, RiskFactor } from '@/types'
 
 interface Props {
   slug: string
+  initialVerdict?: TrekVerdictData | null
 }
 
 const statusConfig: Record<TrekStatus, { label: string; ring: string; bg: string; text: string; bar: string }> = {
@@ -35,9 +36,11 @@ function timeAgo(iso: string): string {
   return `${hrs}h ago`
 }
 
-export function VerdictPanel({ slug }: Props) {
-  const [state, setState] = useState<'idle' | 'loading' | 'done' | 'error'>('idle')
-  const [verdict, setVerdict] = useState<TrekVerdictData | null>(null)
+export function VerdictPanel({ slug, initialVerdict }: Props) {
+  const [state, setState] = useState<'idle' | 'loading' | 'done' | 'error'>(
+    initialVerdict ? 'done' : 'idle'
+  )
+  const [verdict, setVerdict] = useState<TrekVerdictData | null>(initialVerdict ?? null)
   const [errMsg, setErrMsg] = useState('')
 
   async function fetchVerdict() {
@@ -54,7 +57,9 @@ export function VerdictPanel({ slug }: Props) {
     }
   }
 
-  useEffect(() => { fetchVerdict() }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    if (!initialVerdict) fetchVerdict()
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   if (state === 'idle' || state === 'loading') {
     return (

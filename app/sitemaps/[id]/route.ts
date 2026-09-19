@@ -2,17 +2,10 @@ import { NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 
 const BASE = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://peakweather.peakweather.workers.dev'
-const CHUNK = 45_000
+const CHUNK = 5_000
 
-function urlTag(loc: string, freq: string, priority: string, lastmod?: string) {
-  return [
-    '  <url>',
-    `    <loc>${loc}</loc>`,
-    lastmod ? `    <lastmod>${lastmod}</lastmod>` : '',
-    `    <changefreq>${freq}</changefreq>`,
-    `    <priority>${priority}</priority>`,
-    '  </url>',
-  ].filter(Boolean).join('\n')
+function urlTag(loc: string) {
+  return `  <url>\n    <loc>${loc}</loc>\n  </url>`
 }
 
 export async function GET(_req: Request, { params }: { params: Promise<{ id: string }> }) {
@@ -34,10 +27,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
     return new NextResponse('Not Found', { status: 404 })
   }
 
-  const now = new Date().toISOString()
-  const entries = cities.map((c) =>
-    urlTag(`${BASE}/weather/${c.slug}`, 'hourly', '0.8', now),
-  )
+  const entries = cities.map((c) => urlTag(`${BASE}/weather/${c.slug}`))
 
   const xml = [
     '<?xml version="1.0" encoding="UTF-8"?>',

@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 
 const BASE = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://peakweather.peakweather.workers.dev'
-const CHUNK = 45_000
+const CHUNK = 5_000
 
 export async function GET() {
   const cityCount = await db.city.count()

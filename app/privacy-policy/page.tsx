@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: 'Privacy Policy',
   description: 'PeakWeather privacy policy — how we collect, use, and protect your data.',
   alternates: { canonical: '/privacy-policy' },
-  robots: { index: false, follow: false },
+  robots: { index: false, follow: true },
 }
 
 const UPDATED = '18 September 2026'

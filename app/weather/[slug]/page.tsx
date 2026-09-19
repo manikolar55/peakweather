@@ -31,6 +31,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: `${geo.name} Weather | PeakWeather`,
       description: `Live weather for ${geo.name}`,
+      url: `/weather/${slug}`,
       images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: `${geo.name} Weather — PeakWeather` }],
     },
   }
@@ -74,7 +75,18 @@ export default async function CityPage({ params }: Props) {
         url: pageUrl,
         name: `${geo.name} Weather Today & 14-Day Forecast`,
         description: `Current conditions, hourly and 14-day weather forecast for ${geo.name}, ${geo.country}.`,
-        isPartOf: { '@type': 'WebSite', name: 'PeakWeather', url: BASE },
+        isPartOf: { '@id': `${BASE}/#website` },
+      },
+      {
+        '@type': 'City',
+        name: geo.name,
+        containedInPlace: { '@type': 'Country', name: geo.country },
+        geo: {
+          '@type': 'GeoCoordinates',
+          latitude: geo.latitude,
+          longitude: geo.longitude,
+          elevation: Math.round(geo.elevation),
+        },
       },
     ],
   }
