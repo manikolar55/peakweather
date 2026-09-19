@@ -285,8 +285,14 @@ const cityNamespace = {
       .filter(Boolean)
       .join('\n')
 
-    const rows = await sql(query, ...bindings)
+    const rows = await sql.query(query, bindings)
     return rows.map(mapCity)
+  },
+
+  async count(): Promise<number> {
+    const sql = getSql()
+    const rows = await sql`SELECT COUNT(*)::int AS count FROM "City"`
+    return Number(rows[0].count)
   },
 }
 
@@ -435,7 +441,7 @@ const trekNamespace = {
       .filter(Boolean)
       .join('\n')
 
-    const trekRows = await sql(query, ...bindings)
+    const trekRows = await sql.query(query, bindings)
 
     if (args.select) {
       // Partial select — return lightweight objects without full mapping
@@ -465,7 +471,7 @@ const trekNamespace = {
       FROM   "TrekVerdict"
       WHERE  "trekId" = ANY($1)
     `
-    const verdictRows = await sql(verdictQuery, trekIds)
+    const verdictRows = await sql.query(verdictQuery, [trekIds])
     const verdictMap = new Map<string, TrekVerdict>(
       verdictRows.map((r) => [r.trekId as string, mapTrekVerdict(r)]),
     )
@@ -624,4 +630,5 @@ export const db = {
   trekVerdict: trekVerdictNamespace,
   weatherCache: weatherCacheNamespace,
   oWMDailyCounter: owmDailyCounterNamespace,
+  $disconnect: async () => { /* no-op — Neon HTTP is stateless */ },
 } as const
