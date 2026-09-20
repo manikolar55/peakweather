@@ -40,7 +40,7 @@ export function CurrentWeatherCard({ current, cityName, country, elevation, time
       </div>
 
       <div className="mt-4 flex items-end gap-4">
-        <span className="text-5xl sm:text-7xl font-thin">{displayTemp(current.temperature, units.temp)}</span>
+        <span className="text-4xl sm:text-5xl lg:text-7xl font-thin">{displayTemp(current.temperature, units.temp)}</span>
         <div className="mb-2">
           <p className="text-blue-100 text-sm">Feels like {displayTemp(current.apparent_temperature, units.temp)}</p>
           <p className="text-blue-100 font-medium">{condition.label}</p>

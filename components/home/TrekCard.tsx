@@ -50,7 +50,7 @@ export function TrekCard({ name, slug, country, region, summitElevation, difficu
         {country} · {region}
       </p>
 
-      <div className="mt-auto flex items-center gap-3 text-xs">
+      <div className="mt-auto flex flex-wrap items-center gap-1.5 sm:gap-3 text-xs">
         <span className="bg-gray-100 dark:bg-gray-800 px-2 py-0.5 rounded-full text-gray-600 dark:text-gray-400">
           ⛰ {summitElevation.toLocaleString()}m
         </span>

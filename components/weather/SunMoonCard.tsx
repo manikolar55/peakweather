@@ -49,27 +49,27 @@ export function SunMoonCard({ sunrise, sunset, timezone, date }: Props) {
   return (
     <div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 shadow-sm">
       <h2 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">Sun &amp; Moon</h2>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-2 gap-3 sm:gap-4">
         <div>
           <div className="flex items-center gap-2 mb-3">
             <span className="text-2xl">🌅</span>
             <div>
               <p className="text-xs text-gray-500 dark:text-gray-400">Sunrise</p>
-              <p className="font-semibold text-gray-900 dark:text-gray-100">{formatTime(sunrise, timezone)}</p>
+              <p className="font-semibold text-gray-900 dark:text-gray-100 text-sm sm:text-base">{formatTime(sunrise, timezone)}</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
             <span className="text-2xl">🌇</span>
             <div>
               <p className="text-xs text-gray-500 dark:text-gray-400">Sunset</p>
-              <p className="font-semibold text-gray-900 dark:text-gray-100">{formatTime(sunset, timezone)}</p>
+              <p className="font-semibold text-gray-900 dark:text-gray-100 text-sm sm:text-base">{formatTime(sunset, timezone)}</p>
             </div>
           </div>
           <p className="text-xs text-gray-500 dark:text-gray-400 mt-3">Daylight: {daylight}</p>
         </div>
-        <div className="flex flex-col items-center justify-center border-l border-gray-100 dark:border-gray-800 pl-4">
-          <span className="text-5xl">{moon.emoji}</span>
-          <p className="mt-2 text-sm font-medium text-gray-900 dark:text-gray-100">{moon.phase}</p>
+        <div className="flex flex-col items-center justify-center border-l border-gray-100 dark:border-gray-800 pl-3 sm:pl-4">
+          <span className="text-4xl sm:text-5xl">{moon.emoji}</span>
+          <p className="mt-2 text-xs sm:text-sm font-medium text-gray-900 dark:text-gray-100 text-center">{moon.phase}</p>
         </div>
       </div>
     </div>

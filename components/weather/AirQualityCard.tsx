@@ -27,7 +27,7 @@ export function AirQualityCard({ aq }: Props) {
       <h2 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">Air Quality</h2>
 
       <div className="flex items-center gap-4 mb-3">
-        <div className="text-4xl font-bold text-gray-900 dark:text-gray-100">{Math.round(aqi)}</div>
+        <div className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-gray-100">{Math.round(aqi)}</div>
         <div>
           <p className={cn('font-semibold', color)}>{label}</p>
           <p className="text-xs text-gray-500">US AQI</p>

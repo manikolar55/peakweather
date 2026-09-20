@@ -105,7 +105,7 @@ export function VerdictPanel({ slug, initialVerdict }: Props) {
   return (
     <div className={`rounded-2xl border bg-white dark:bg-gray-900 shadow-sm overflow-hidden ring-2 ${cfg.ring}`}>
       {/* Header */}
-      <div className={`${cfg.bg} px-6 py-4 flex items-center justify-between gap-4`}>
+      <div className={`${cfg.bg} px-4 sm:px-6 py-3 sm:py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4`}>
         <div className="flex items-center gap-4">
           <div className={`text-2xl font-black px-4 py-1.5 rounded-xl ring-2 ${cfg.ring} ${cfg.bg} ${cfg.text}`}>
             {cfg.label}
@@ -121,7 +121,7 @@ export function VerdictPanel({ slug, initialVerdict }: Props) {
         </div>
       </div>
 
-      <div className="px-6 py-5 space-y-5">
+      <div className="px-4 sm:px-6 py-4 sm:py-5 space-y-4 sm:space-y-5">
         {/* Score bar */}
         <div>
           <div className="flex justify-between text-xs text-gray-400 mb-1.5">

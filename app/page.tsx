@@ -111,7 +111,7 @@ export default async function HomePage() {
           </div>
 
           <div className="relative max-w-3xl mx-auto text-center text-white">
-            <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight mb-3">
+            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight mb-3">
               Weather for Every City.<br />
               <span className="text-blue-200">AI Safety for Every Summit.</span>
             </h1>
@@ -180,7 +180,7 @@ export default async function HomePage() {
               { icon: '🤖', title: 'AI Trek Verdicts', body: 'Claude evaluates summit conditions: GO, CAUTION, or NO-GO.' },
               { icon: '📡', title: 'Live Radar', body: 'Animated precipitation radar with RainViewer tiles.' },
             ].map(({ icon, title, body }) => (
-              <div key={title} className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-6">
+              <div key={title} className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 sm:p-6">
                 <div className="text-4xl mb-3">{icon}</div>
                 <h3 className="font-bold text-gray-900 dark:text-gray-100">{title}</h3>
                 <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">{body}</p>

@@ -218,7 +218,7 @@ export default async function CityPage({ params }: Props) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <Header />
-      <main className="max-w-5xl mx-auto px-4 pb-12 pt-6 space-y-4">
+      <main className="max-w-5xl mx-auto px-3 sm:px-4 pb-12 pt-4 sm:pt-6 space-y-4">
 
         <WeatherAlerts hourly={weather.hourly} daily={weather.daily} />
 
@@ -236,7 +236,7 @@ export default async function CityPage({ params }: Props) {
 
         <DailyForecast daily={weather.daily} />
 
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           {aq ? <AirQualityCard aq={aq} /> : null}
           <UvIndexCard uvIndex={weather.daily.uv_index_max?.[0] ?? 0} />
           <SunMoonCard

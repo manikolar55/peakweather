@@ -37,26 +37,28 @@ export function HourlyChart({ hourly }: Props) {
 
   return (
     <div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 shadow-sm">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="font-semibold text-gray-900 dark:text-gray-100">48-Hour Forecast</h2>
-        <div className="flex gap-1 text-xs">
+      <div className="flex items-center justify-between mb-4 gap-2">
+        <h2 className="font-semibold text-gray-900 dark:text-gray-100 text-sm sm:text-base">48-Hour Forecast</h2>
+        <div className="flex gap-1 text-xs shrink-0">
           {(['temperature', 'precipitation', 'wind'] as Mode[]).map((m) => (
             <button
               key={m}
               onClick={() => setMode(m)}
-              className={`px-2.5 py-1 rounded-full capitalize transition-colors ${
+              className={`px-2 sm:px-2.5 py-1 rounded-full capitalize transition-colors ${
                 mode === m
                   ? 'bg-blue-600 text-white'
                   : 'bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700'
               }`}
             >
-              {m}
+              <span className="hidden sm:inline">{m}</span>
+              <span className="sm:hidden">{m === 'temperature' ? 'Temp' : m === 'precipitation' ? 'Rain' : 'Wind'}</span>
             </button>
           ))}
         </div>
       </div>
 
-      <ResponsiveContainer width="100%" height={220}>
+      <div className="h-[180px] sm:h-[220px]">
+      <ResponsiveContainer width="100%" height="100%">
         {mode === 'temperature' ? (
           <ComposedChart data={data}>
             <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
@@ -90,6 +92,7 @@ export function HourlyChart({ hourly }: Props) {
           </ComposedChart>
         )}
       </ResponsiveContainer>
+      </div>
     </div>
   )
 }

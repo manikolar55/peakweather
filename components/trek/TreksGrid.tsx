@@ -55,19 +55,19 @@ export function TreksGrid({ treks }: Props) {
   return (
     <div>
       {/* ── Filters ─────────────────────────────────────────────────────── */}
-      <div className="flex flex-wrap gap-3 mb-8">
+      <div className="flex flex-col sm:flex-row sm:flex-wrap gap-2 sm:gap-3 mb-6 sm:mb-8">
         <input
           type="search"
           placeholder="Search treks…"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="flex-1 min-w-[200px] rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full sm:flex-1 sm:min-w-[200px] rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
 
         <select
           value={difficulty}
           onChange={(e) => setDifficulty(e.target.value)}
-          className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full sm:w-auto rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           <option value="all">All difficulties</option>
           {DIFFICULTIES.map((d) => (
@@ -78,7 +78,7 @@ export function TreksGrid({ treks }: Props) {
         <select
           value={status}
           onChange={(e) => setStatus(e.target.value)}
-          className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full sm:w-auto rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           <option value="all">Any verdict</option>
           {STATUSES.map((s) => <option key={s} value={s}>{s}</option>)}
@@ -88,7 +88,7 @@ export function TreksGrid({ treks }: Props) {
         <select
           value={country}
           onChange={(e) => setCountry(e.target.value)}
-          className="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full sm:w-auto rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           {countries.map((c) => (
             <option key={c} value={c}>{c === 'all' ? 'All countries' : c}</option>
@@ -114,7 +114,7 @@ export function TreksGrid({ treks }: Props) {
           <h2 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-4">
             Featured treks ({popular.length})
           </h2>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {popular.map((t) => (
               <TrekCard
                 key={t.id}
@@ -139,7 +139,7 @@ export function TreksGrid({ treks }: Props) {
               All treks ({rest.length})
             </h2>
           )}
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {rest.map((t) => (
               <TrekCard
                 key={t.id}

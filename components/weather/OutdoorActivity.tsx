@@ -64,13 +64,15 @@ export function OutdoorActivity({ current, hourly }: Props) {
   return (
     <div className="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 shadow-sm">
       <h2 className="font-semibold text-gray-900 dark:text-gray-100 mb-3">Outdoor Activities Today</h2>
-      <div className="grid grid-cols-3 gap-2 sm:gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
         {activities.map(({ activity, icon, rating, reason }) => (
-          <div key={activity} className={`rounded-xl border p-2 sm:p-3 text-center text-xs sm:text-sm ${ratingColors[rating]}`}>
-            <div className="text-2xl mb-1">{icon}</div>
-            <div className="capitalize font-medium">{activity}</div>
-            <div className="font-bold mt-0.5">{rating}</div>
-            <div className="text-xs mt-1 opacity-80">{reason}</div>
+          <div key={activity} className={`rounded-xl border p-3 flex sm:flex-col items-center sm:text-center gap-3 sm:gap-0 text-sm ${ratingColors[rating]}`}>
+            <div className="text-2xl sm:mb-1 shrink-0">{icon}</div>
+            <div className="flex-1 sm:flex-none">
+              <div className="capitalize font-medium">{activity}</div>
+              <div className="font-bold">{rating}</div>
+              <div className="text-xs opacity-80">{reason}</div>
+            </div>
           </div>
         ))}
       </div>

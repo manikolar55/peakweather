@@ -237,7 +237,7 @@ export function LocalWeatherWidget() {
           </div>
         </div>
 
-        <div className="bg-white/10 rounded-xl p-2 sm:p-3 w-full overflow-hidden">
+        <div className="bg-white/10 rounded-xl p-2 sm:p-3 w-full overflow-x-auto">
           <HourlyStrip hourly={hourly} hours={12} />
         </div>
       </div>

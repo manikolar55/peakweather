@@ -29,7 +29,7 @@ export function HourlyStrip({ hourly, hours = 24 }: Props) {
       {items.map(({ hour, temp, icon, precipProb }, i) => (
         <div
           key={i}
-          className="flex flex-col items-center gap-1 min-w-[56px] px-1 py-2 rounded-xl text-center text-xs hover:bg-blue-50 dark:hover:bg-blue-950 transition-colors"
+          className="flex flex-col items-center gap-1 min-w-[48px] sm:min-w-[56px] px-1 py-2 rounded-xl text-center text-xs hover:bg-blue-50 dark:hover:bg-blue-950 transition-colors"
         >
           <span className="text-gray-500 dark:text-gray-400 whitespace-nowrap">
             {i === 0 ? 'Now' : hour}
