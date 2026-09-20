@@ -95,7 +95,7 @@ export function LocalWeatherWidget() {
   if (status === 'prompt' && permissionChecked) {
     return (
       <div className="rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-700 dark:from-blue-800 dark:to-indigo-950 text-white shadow-xl overflow-hidden">
-        <div className="p-6 flex flex-col items-center justify-center text-center gap-5" style={{ minHeight: 220 }}>
+        <div className="p-4 sm:p-6 flex flex-col items-center justify-center text-center gap-5" style={{ minHeight: 220 }}>
           <div className="w-16 h-16 rounded-full bg-white/15 flex items-center justify-center text-3xl">
             📍
           </div>
@@ -195,15 +195,15 @@ export function LocalWeatherWidget() {
 
   return (
     <div className="rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-700 dark:from-blue-800 dark:to-indigo-950 text-white shadow-xl overflow-hidden">
-      <div className="p-6">
-        <div className="flex items-start justify-between mb-4">
-          <div>
+      <div className="p-4 sm:p-6">
+        <div className="flex items-start justify-between mb-4 w-full">
+          <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2">
-              <h2 className="text-xl font-bold">{loc.name}</h2>
+              <h2 className="text-lg sm:text-xl font-bold truncate">{loc.name}</h2>
               <button
                 onClick={requestLocation}
                 title="Detect my location"
-                className="w-7 h-7 flex items-center justify-center rounded-full bg-white/15 hover:bg-white/25 transition-colors text-sm"
+                className="w-7 h-7 flex-shrink-0 flex items-center justify-center rounded-full bg-white/15 hover:bg-white/25 transition-colors text-sm"
               >
                 📍
               </button>
@@ -211,33 +211,33 @@ export function LocalWeatherWidget() {
             {loc.country && <p className="text-blue-200 text-sm">{loc.country}</p>}
             <p className="text-blue-200 text-xs mt-0.5">{localTime}</p>
           </div>
-          <WeatherIcon icon={icon} size={56} />
+          <WeatherIcon icon={icon} size={48} />
         </div>
 
-        <div className="flex items-end gap-3 mb-4">
-          <span className="text-4xl sm:text-6xl font-thin">{displayTemp(current.temperature, units.temp)}</span>
-          <div className="mb-1">
+        <div className="flex items-end gap-3 mb-4 w-full">
+          <span className="text-4xl sm:text-6xl font-thin shrink-0">{displayTemp(current.temperature, units.temp)}</span>
+          <div className="mb-1 min-w-0">
             <p className="text-blue-100 text-sm">Feels {displayTemp(current.apparent_temperature, units.temp)}</p>
-            <p className="font-medium">{condition.label}</p>
+            <p className="font-medium text-sm truncate">{condition.label}</p>
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-2 sm:gap-3 text-xs sm:text-sm mb-5">
+        <div className="grid grid-cols-3 gap-2 text-xs mb-5 w-full">
           <div>
-            <p className="text-blue-300 text-xs">Humidity</p>
+            <p className="text-blue-300">Humidity</p>
             <p className="font-semibold">{current.relativehumidity}%</p>
           </div>
           <div>
-            <p className="text-blue-300 text-xs">Wind</p>
-            <p className="font-semibold">{displayWind(current.windspeed, units.wind)} {degreesToCardinal(current.winddirection)}</p>
+            <p className="text-blue-300">Wind</p>
+            <p className="font-semibold truncate">{displayWind(current.windspeed, units.wind)} {degreesToCardinal(current.winddirection)}</p>
           </div>
           <div>
-            <p className="text-blue-300 text-xs">Visibility</p>
+            <p className="text-blue-300">Visibility</p>
             <p className="font-semibold">{(current.visibility / 1000).toFixed(1)} km</p>
           </div>
         </div>
 
-        <div className="bg-white/10 rounded-xl p-3 -mx-1">
+        <div className="bg-white/10 rounded-xl p-2 sm:p-3 w-full overflow-hidden">
           <HourlyStrip hourly={hourly} hours={12} />
         </div>
       </div>
