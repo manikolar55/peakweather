@@ -102,7 +102,7 @@ export default async function HomePage() {
       <Header />
       <main>
         {/* ── Hero ─────────────────────────────────────────────── */}
-        <section className="relative overflow-hidden bg-gradient-to-b from-blue-600 via-blue-500 to-sky-400 dark:from-blue-950 dark:via-blue-900 dark:to-indigo-900 py-20 px-4">
+        <section className="relative overflow-hidden bg-gradient-to-b from-blue-600 via-blue-500 to-sky-400 dark:from-blue-950 dark:via-blue-900 dark:to-indigo-900 py-10 sm:py-20 px-4">
           {/* decorative clouds */}
           <div className="pointer-events-none absolute inset-0">
             <div className="absolute top-10 left-[5%] w-40 h-16 rounded-full bg-white/10 blur-2xl" />
@@ -135,7 +135,7 @@ export default async function HomePage() {
           {/* ── Popular cities ───────────────────────────────── */}
           <section>
             <SectionHeader title="Popular Cities" href={null} />
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
               {cities.map((city) => (
                 <CityCard
                   key={city.slug}
@@ -157,7 +157,7 @@ export default async function HomePage() {
             <SectionHeader title="Popular Treks Today" href="/treks" linkLabel="Browse all treks →" />
 
 
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {treks.map((trek) => (
                 <TrekCard
                   key={trek.id}
@@ -174,7 +174,7 @@ export default async function HomePage() {
           </section>
 
           {/* ── Features strip ───────────────────────────────── */}
-          <section className="grid gap-4 sm:grid-cols-3 text-center">
+          <section className="grid grid-cols-1 gap-4 sm:grid-cols-3 text-center">
             {[
               { icon: '🌍', title: 'Global Coverage', body: 'Weather for any city worldwide via Open-Meteo.' },
               { icon: '🤖', title: 'AI Trek Verdicts', body: 'Claude evaluates summit conditions: GO, CAUTION, or NO-GO.' },

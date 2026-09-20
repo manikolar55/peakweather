@@ -215,14 +215,14 @@ export function LocalWeatherWidget() {
         </div>
 
         <div className="flex items-end gap-3 mb-4">
-          <span className="text-6xl font-thin">{displayTemp(current.temperature, units.temp)}</span>
+          <span className="text-4xl sm:text-6xl font-thin">{displayTemp(current.temperature, units.temp)}</span>
           <div className="mb-1">
             <p className="text-blue-100 text-sm">Feels {displayTemp(current.apparent_temperature, units.temp)}</p>
             <p className="font-medium">{condition.label}</p>
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-3 text-sm mb-5">
+        <div className="grid grid-cols-3 gap-2 sm:gap-3 text-xs sm:text-sm mb-5">
           <div>
             <p className="text-blue-300 text-xs">Humidity</p>
             <p className="font-semibold">{current.relativehumidity}%</p>

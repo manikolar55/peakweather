@@ -29,7 +29,7 @@ export function DailyForecast({ daily }: Props) {
 
           return (
             <div key={date} className={`flex items-center gap-3 py-2.5 text-sm ${isToday ? 'font-semibold' : ''}`}>
-              <span className="w-24 text-gray-600 dark:text-gray-400 shrink-0">
+              <span className="w-16 sm:w-24 text-gray-600 dark:text-gray-400 shrink-0">
                 {isToday ? 'Today' : formatDate(date)}
               </span>
               <WeatherIcon icon={icon} size={28} />

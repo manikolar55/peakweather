@@ -40,14 +40,14 @@ export function CurrentWeatherCard({ current, cityName, country, elevation, time
       </div>
 
       <div className="mt-4 flex items-end gap-4">
-        <span className="text-7xl font-thin">{displayTemp(current.temperature, units.temp)}</span>
+        <span className="text-5xl sm:text-7xl font-thin">{displayTemp(current.temperature, units.temp)}</span>
         <div className="mb-2">
           <p className="text-blue-100 text-sm">Feels like {displayTemp(current.apparent_temperature, units.temp)}</p>
           <p className="text-blue-100 font-medium">{condition.label}</p>
         </div>
       </div>
 
-      <div className="mt-6 grid grid-cols-2 gap-y-3 gap-x-6 sm:grid-cols-4 text-sm">
+      <div className="mt-6 grid grid-cols-2 gap-y-3 gap-x-3 sm:gap-x-6 sm:grid-cols-4 text-sm">
         <Stat label="Humidity" value={`${current.relativehumidity}%`} />
         <Stat label="Wind" value={`${displayWind(current.windspeed, units.wind)} ${degreesToCardinal(current.winddirection)}`} />
         <Stat label="Gusts" value={displayWind(current.windgusts, units.wind)} />
