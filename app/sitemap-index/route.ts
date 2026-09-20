@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { db } from '@/lib/db'
 
-const BASE = process.env.SITE_URL ?? 'https://peakweather.peakweather.workers.dev'
+const BASE = process.env.SITE_URL ?? 'https://thepeakweather.com'
 const CHUNK = 5_000
 
 export async function GET() {

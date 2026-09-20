@@ -42,7 +42,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export const revalidate = 900
 
-const BASE = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://peakweather.peakweather.workers.dev'
+const BASE = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://thepeakweather.com'
 
 export default async function TrekPage({ params }: Props) {
   const { slug } = await params
