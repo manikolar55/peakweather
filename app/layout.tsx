@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
+import Script from 'next/script'
 import { Providers } from '@/components/ui/Providers'
 import { CookieConsent } from '@/components/ui/CookieConsent'
 import './globals.css'
@@ -31,10 +32,19 @@ export const metadata: Metadata = {
   },
 }
 
+const ADSENSE_ID = process.env.NEXT_PUBLIC_ADSENSE_ID
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full`} suppressHydrationWarning>
       <body className="min-h-full flex flex-col bg-background text-foreground antialiased">
+        {ADSENSE_ID && (
+          <Script
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-${ADSENSE_ID}`}
+            strategy="afterInteractive"
+            crossOrigin="anonymous"
+          />
+        )}
         <Providers>{children}</Providers>
         <CookieConsent />
       </body>
