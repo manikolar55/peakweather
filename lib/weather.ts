@@ -292,7 +292,8 @@ export async function fetchWeather(lat: number, lon: number, altitude?: number, 
   const cached = await cacheGet(key)
   if (cached) {
     const data = JSON.parse(cached.data) as WeatherData
-    return { ...data, timezone: tz }
+    data.timezone = tz
+    return data
   }
 
   const params = new URLSearchParams({ lat: String(latR), lon: String(lonR) })

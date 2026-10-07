@@ -90,10 +90,13 @@ export async function findNearestCity(lat: number, lon: number): Promise<Geocodi
     },
   })
   if (!candidates.length) return null
-  const nearest = candidates
-    .map((c) => ({ c, d: haversineKm(lat, lon, c.lat, c.lon) }))
-    .sort((a, b) => a.d - b.d)[0]
-  return cityToGeo(nearest.c)
+  let nearest = candidates[0]
+  let minDist = haversineKm(lat, lon, nearest.lat, nearest.lon)
+  for (let i = 1; i < candidates.length; i++) {
+    const d = haversineKm(lat, lon, candidates[i].lat, candidates[i].lon)
+    if (d < minDist) { minDist = d; nearest = candidates[i] }
+  }
+  return cityToGeo(nearest)
 }
 
 export async function findTreksNearCity(lat: number, lon: number, maxKm = 250, limit = 5): Promise<Trek[]> {
