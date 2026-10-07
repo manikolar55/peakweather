@@ -1,12 +1,12 @@
 /**
  * Weather data via MET Norway Locationforecast 2.0
- * https://api.met.no/weatherapi/locationforecast/2.0/complete
+ * https://api.met.no/weatherapi/locationforecast/2.0/compact
  * Licence: CC BY 4.0 — attribution required in UI
  */
 import { cacheGet, cacheSet } from '@/lib/kv-cache'
 import type { WeatherData, CurrentWeather, HourlyWeather, DailyWeather } from '@/types'
 
-const BASE = 'https://api.met.no/weatherapi/locationforecast/2.0/complete'
+const BASE = 'https://api.met.no/weatherapi/locationforecast/2.0/compact'
 const TIMEOUT_MS = 10_000
 
 function ua(): string {
