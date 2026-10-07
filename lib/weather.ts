@@ -175,37 +175,63 @@ function parseResponse(raw: { properties: { timeseries: METEntry[] } }, lat: num
   let dayCount = 0
   for (const [dk, entries] of dayBuckets) {
     if (dayCount >= 14) break
-    const ds     = entries.map((e) => e.data.instant.details)
-    const temps  = ds.map((d) => d.air_temperature ?? 0)
-    const winds  = ds.map((d) => (d.wind_speed ?? 0) * 3.6)
-    const gusts  = ds.map((d) => (d.wind_speed_of_gust ?? d.wind_speed ?? 0) * 3.6)
-    const precs  = entries.map((e) => e.data.next_1_hours?.details?.precipitation_amount ?? 0)
-    const pProbs = entries.map((e) => e.data.next_1_hours?.details?.precipitation_probability ?? e.data.next_6_hours?.details?.precipitation_probability ?? 0)
-    const uvs    = ds.map((d) => d.ultraviolet_index_clear_sky ?? 0)
-    const noon   = entries.find((e) => e.time.includes('T12:')) ?? entries[Math.floor(entries.length / 2)]
-    const noonSym = noon?.data.next_1_hours?.summary?.symbol_code ?? noon?.data.next_6_hours?.summary?.symbol_code ?? 'cloudy'
-    const appTemps = entries.map((e) => {
+
+    // Single pass — avoids creating 7 separate map() arrays and spread operators
+    let maxTemp = -Infinity, minTemp = Infinity
+    let maxApp = -Infinity, minApp = Infinity
+    let maxWind = 0, maxGust = 0, maxUv = 0, maxPProb = 0
+    let precipSum = 0, precipHours = 0, dominantWind = 0
+    let noonEntry = entries[Math.floor(entries.length / 2)]
+    let noonSym = 'cloudy'
+
+    for (const e of entries) {
       const d = e.data.instant.details
-      return calcApparent(d.air_temperature ?? 0, (d.wind_speed ?? 0) * 3.6, d.relative_humidity ?? 50)
-    })
+      const t = d.air_temperature ?? 0
+      const w = (d.wind_speed ?? 0) * 3.6
+      const g = (d.wind_speed_of_gust ?? d.wind_speed ?? 0) * 3.6
+      const rh = d.relative_humidity ?? 50
+      const app = calcApparent(t, w, rh)
+      const uv = d.ultraviolet_index_clear_sky ?? 0
+      const prec = e.data.next_1_hours?.details?.precipitation_amount ?? 0
+      const pProb = e.data.next_1_hours?.details?.precipitation_probability ?? e.data.next_6_hours?.details?.precipitation_probability ?? 0
+
+      if (t > maxTemp) maxTemp = t
+      if (t < minTemp) minTemp = t
+      if (app > maxApp) maxApp = app
+      if (app < minApp) minApp = app
+      if (w > maxWind) { maxWind = w; dominantWind = d.wind_from_direction ?? 0 }
+      if (g > maxGust) maxGust = g
+      if (uv > maxUv) maxUv = uv
+      if (pProb > maxPProb) maxPProb = pProb
+      precipSum += prec
+      if (prec > 0.1) precipHours++
+      if (e.time.includes('T12:')) {
+        noonEntry = e
+        noonSym = e.data.next_1_hours?.summary?.symbol_code ?? e.data.next_6_hours?.summary?.symbol_code ?? 'cloudy'
+      }
+    }
+
+    if (noonSym === 'cloudy') {
+      noonSym = noonEntry?.data.next_1_hours?.summary?.symbol_code ?? noonEntry?.data.next_6_hours?.summary?.symbol_code ?? 'cloudy'
+    }
 
     const sun = getSunriseSunset(lat, lon, new Date(dk + 'T00:00:00Z'))
 
     daily.time.push(dk)
-    daily.temperature_2m_max.push(Math.max(...temps))
-    daily.temperature_2m_min.push(Math.min(...temps))
-    daily.apparent_temperature_max.push(Math.max(...appTemps))
-    daily.apparent_temperature_min.push(Math.min(...appTemps))
-    daily.precipitation_sum.push(Math.round(precs.reduce((a, b) => a + b, 0) * 10) / 10)
-    daily.precipitation_probability_max.push(Math.max(...pProbs))
+    daily.temperature_2m_max.push(maxTemp === -Infinity ? 0 : maxTemp)
+    daily.temperature_2m_min.push(minTemp === Infinity ? 0 : minTemp)
+    daily.apparent_temperature_max.push(maxApp === -Infinity ? 0 : maxApp)
+    daily.apparent_temperature_min.push(minApp === Infinity ? 0 : minApp)
+    daily.precipitation_sum.push(Math.round(precipSum * 10) / 10)
+    daily.precipitation_probability_max.push(maxPProb)
     daily.weathercode.push(symbolToWMO(noonSym))
-    daily.windspeed_10m_max.push(Math.round(Math.max(...winds) * 10) / 10)
-    daily.windgusts_10m_max.push(Math.round(Math.max(...gusts) * 10) / 10)
-    daily.winddirection_10m_dominant.push(noon?.data.instant.details.wind_from_direction ?? 0)
-    daily.uv_index_max.push(Math.max(...uvs))
+    daily.windspeed_10m_max.push(Math.round(maxWind * 10) / 10)
+    daily.windgusts_10m_max.push(Math.round(maxGust * 10) / 10)
+    daily.winddirection_10m_dominant.push(dominantWind)
+    daily.uv_index_max.push(maxUv)
     daily.sunrise.push(sun?.sunrise ?? '')
     daily.sunset.push(sun?.sunset ?? '')
-    daily.precipitation_hours.push(precs.filter((p) => p > 0.1).length)
+    daily.precipitation_hours.push(precipHours)
     dayCount++
   }
 
