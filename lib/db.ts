@@ -327,6 +327,8 @@ type OrderByDir = 'asc' | 'desc'
 
 interface TrekWhereInput {
   popular?: boolean
+  lat?: { gte?: number; lte?: number }
+  lon?: { gte?: number; lte?: number }
   OR?: Array<{
     name?: { contains: string; mode?: string }
     country?: { contains: string; mode?: string }
@@ -393,6 +395,22 @@ const trekNamespace = {
       if (w.popular !== undefined) {
         bindings.push(w.popular)
         conditions.push(`popular = $${bindings.length}`)
+      }
+      if (w.lat?.gte !== undefined) {
+        bindings.push(w.lat.gte)
+        conditions.push(`lat >= $${bindings.length}`)
+      }
+      if (w.lat?.lte !== undefined) {
+        bindings.push(w.lat.lte)
+        conditions.push(`lat <= $${bindings.length}`)
+      }
+      if (w.lon?.gte !== undefined) {
+        bindings.push(w.lon.gte)
+        conditions.push(`lon >= $${bindings.length}`)
+      }
+      if (w.lon?.lte !== undefined) {
+        bindings.push(w.lon.lte)
+        conditions.push(`lon <= $${bindings.length}`)
       }
       if (w.OR && w.OR.length > 0) {
         const orParts: string[] = []
