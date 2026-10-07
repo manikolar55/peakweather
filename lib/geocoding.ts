@@ -97,8 +97,15 @@ export async function findNearestCity(lat: number, lon: number): Promise<Geocodi
 }
 
 export async function findTreksNearCity(lat: number, lon: number, maxKm = 250, limit = 5): Promise<Trek[]> {
-  const allTreks = await db.trek.findMany()
-  return allTreks
+  // Use a bounding box in SQL to avoid loading all treks into memory
+  const degreeBuffer = maxKm / 111 // ~111 km per degree
+  const candidates = await db.trek.findMany({
+    where: {
+      lat: { gte: lat - degreeBuffer, lte: lat + degreeBuffer },
+      lon: { gte: lon - degreeBuffer, lte: lon + degreeBuffer },
+    },
+  })
+  return candidates
     .map((t) => ({ trek: t, dist: haversineKm(lat, lon, t.lat, t.lon) }))
     .filter(({ dist }) => dist <= maxKm)
     .sort((a, b) => a.dist - b.dist)
